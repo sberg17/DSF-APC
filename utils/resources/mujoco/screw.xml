@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="screw simulation">
+
+    <compiler angle="degree"/>
+
+    <asset>
+        <mesh file="screw_link.STL" />
+        <mesh file="threadedhole.STL" scale="0.001 0.001 0.001" />
+    </asset>
+
+    <worldbody>
+        <camera axisangle="0 1 0 35" name="rgb" pos="0.13 0 0.24"></camera>
+        <geom name="floor" pos="0 0 0" size="1 1 1" type="plane" rgba="0.99 0.99 0.99 1"/>
+
+        <body pos="0.007 0 0.1" name="hole">
+            <geom name="hole" type="mesh" mesh="threadedhole" pos="0 0 0" />
+            <inertial pos="0 0 0" mass="1.00" diaginertia="1 1 1" />
+        </body>
+
+        <body pos="0.05 0.01 0.11" name="base">
+            <inertial pos="0 0 0" mass="0.005" diaginertia="1 1 1"/>
+            <joint axis="-1 0 0" name="screw_translation" pos="0 0 0" type="slide" />
+            <body pos="0 0 0" name="screw">
+                <geom name="screw" type="mesh" mesh="screw_link" pos="0 0 0" />
+                <inertial pos="0 0 0" mass="0.005" diaginertia="1 1 1"/>
+                <joint axis="1 0 0" name="screw_rotation" pos="0 0 0" type="hinge"/>
+            </body>
+        </body>
+
+    </worldbody>
+
+    <visual>
+        <global offwidth="1280" offheight="720"/>
+    </visual>
+
+    <actuator>
+        <motor name="screw_rot_motor" joint="screw_rotation" />
+    </actuator>
+
+</mujoco>
+
+
